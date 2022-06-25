@@ -1,0 +1,23 @@
+{
+  "name": "3-bases-node",
+  "version": "0.0.1",
+  "description": "Simple tabla de multiplicar con creacion de archivo de texto",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "base": "node app --base=9"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pauliwikiwi/curso-node.git"
+  },
+  "author": "Paula Blazquez",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pauliwikiwi/curso-node/issues"
+  },
+  "homepage": "https://github.com/pauliwikiwi/curso-node#readme",
+  "dependencies": {
+    "colors": "^1.4.0"
+  }
+}
