@@ -1,16 +1,8 @@
-const {crearArchivo} = require('./helpers/multiplicar')
-
-console.clear();
-
-const [,,arg3 = '--base=7'] = process.argv;
-const [,base] = arg3.split('=');
-console.log(base);
-
-/*const base = 8;*/
+const {crearArchivo} = require('./helpers/multiplicar');
+const argv = require('./config/yargs');
+const colors = require('colors');
 
 
-
-
-    crearArchivo(base)
-        .then(nombreArchivo => console.log(nombreArchivo, 'creado'))
-        .catch(err => console.log(err));
+crearArchivo(argv.b, argv.l)
+     .then(nombreArchivo => console.log(`${nombreArchivo}`.rainbow, 'creado correctamente'))
+     .catch(err => console.log(err));

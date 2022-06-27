@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/pauliwikiwi/curso-node#readme",
   "dependencies": {
-    "colors": "^1.4.0"
+    "colors": "^1.4.0",
+    "yargs": "^17.5.1"
   }
 }
