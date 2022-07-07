@@ -80,12 +80,63 @@ const leerInput = async(message) => {
 }
 
 const listadoTareasBorrar = async(tareas = []) => {
-    /*
-    * {
-    *       value: '1',
-    *       name: `${'1.'.red} Crear nueva tarea`
-    * }
-    * */
+    const choices =tareas.map((tarea, id) => {
+        const idx = `${id +1}.`.red;
+        return {
+            value: tarea.id,
+            name: `${ idx } ${tarea.desc}`,
+        }
+    });
+    choices.unshift({
+        value: '0',
+        name: '0.'.red + 'Salir'
+    })
+
+    const preguntas = [
+        {
+            type: 'list',
+            name: 'id',
+            message: 'Borrar',
+            choices
+        }
+    ]
+    const { id } = await inquirer.prompt(preguntas);
+    return id;
+}
+
+const confirmar = async(mensaje) => {
+    const pregunta = [
+        {
+            type: 'confirm',
+            name: 'ok',
+            message: mensaje
+        }
+    ]
+
+    const { ok } = await inquirer.prompt(pregunta);
+    return ok;
+}
+
+const mostrarListadoChecklist = async(tareas = []) => {
+    const choices =tareas.map((tarea, id) => {
+        const idx = `${id +1}.`.red;
+        return {
+            value: tarea.id,
+            name: `${ idx } ${tarea.desc}`,
+            checked: (tarea.completadoEn) ? true : false
+        }
+    });
+
+    const pregunta = [
+        {
+            type: 'checkbox',
+            name: 'ids',
+            message: 'Selecciones',
+            choices
+        }
+    ]
+    const { ids } = await inquirer.prompt(pregunta);
+    return ids;
 }
 
 
@@ -93,5 +144,7 @@ module.exports = {
     inquirerMenu,
     pausa,
     leerInput,
-    listadoTareasBorrar
+    listadoTareasBorrar,
+    confirmar,
+    mostrarListadoChecklist
 }
