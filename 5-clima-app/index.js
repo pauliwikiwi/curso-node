@@ -1,4 +1,6 @@
-const {leerInput, inquirerMenu, pausa} = require("./helpers/inquirer");
+require('dotenv').config()
+
+const {leerInput, inquirerMenu, pausa, listarLugares} = require("./helpers/inquirer");
 const Busquedas = require("./models/busquedas");
 
 const main = async () => {
@@ -11,22 +13,38 @@ const main = async () => {
       switch (opt){
          case 1:
             //Mostrar mensaje
-            const lugar = await leerInput('Escriba la ciudad que desea buscar: ');
-            await busquedas.ciudad(lugar)
+            const terminoBusqueda = await leerInput('Escriba la ciudad que desea buscar: ');
+
             //Buscar los lugares
+            let ciudades = await busquedas.ciudad(terminoBusqueda);
+
 
             //Seleccionar el lugar
+            const id = await listarLugares(ciudades);
+            if (id === '0')continue;
+
+            const lugarSeleccionado = ciudades.find(l => l.id === id);
+
+            //Guardar en db
+             busquedas.agregarHistorial(lugarSeleccionado.nombre);
 
             //Datos de clima
-
+            const clima = await busquedas.climaLugar(lugarSeleccionado.lat, lugarSeleccionado.lng)
             //Mostrar resultados
             console.log('Información de la ciudad'. rainbow);
-            console.log('Ciudad');
-            console.log('Temperatura maxima');
-            console.log('Temperatura minima');
+            console.log('Ciudad ',  (lugarSeleccionado.nombre).yellow);
+            console.log('Latitud ', lugarSeleccionado.lat);
+            console.log('Longitud ', lugarSeleccionado.lng);
+            console.log('Temperatura actual ', (clima.temp + 'º').yellow);
+            console.log('Temperatura maxima ', (clima.min + 'º').yellow);
+            console.log('Temperatura minima ',( clima.max + 'º').yellow);
+            console.log('Descripción del cielo ', (clima.desc).yellow);
          break;
          case 2:
-            console.log('Ha seleccionado la opción 2');
+            busquedas.HistorialCapitalizado.forEach((lugar, i) => {
+               const idx = `${i +1}`.red;
+               console.log(`${idx} ${lugar}`);
+            })
          break;
 
       }
